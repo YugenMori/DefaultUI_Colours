@@ -3954,6 +3954,19 @@ f:SetScript("OnEvent", function(self)
     end
   end
 end)
+-- CharacterAmmoSlot
+local f = CreateFrame("Frame")
+f:RegisterEvent("PLAYER_ENTERING_WORLD")
+f:SetScript("OnEvent", function(self)
+	if GetWoWVersion <= 30600 then
+    self:UnregisterAllEvents()
+    local ChildRegions = { CharacterAmmoSlot:GetRegions() }
+    local fs = {}
+    for k, v in pairs(ChildRegions) do
+    	AbyssUI_ColorizationFrameFunction(v)
+    end
+  end
+end)
 -- SpellBookFrame
 local f = CreateFrame("Frame")
 f:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -3983,91 +3996,6 @@ f:SetScript("OnEvent", function(self)
     end
   end
 end)
--- QuestLogFrame
---[[
-local f = CreateFrame("Frame")
-f:RegisterEvent("PLAYER_ENTERING_WORLD")
-f:SetScript("OnEvent", function(self)
-	if GetWoWVersion <= 30600 then
-		if (AbyssUIAddonSettings.ExtraFunctionDisableQuestFrame ~= true) then
-	    self:UnregisterAllEvents()
-	    local ChildRegions = { QuestLogFrame:GetRegions(), QuestFrameDetailPanel:GetRegions() }
-	    local fs = {}
-	    for k, v in pairs(ChildRegions) do
-	    	AbyssUI_ColorizationFrameFunction(v)
-	    end
-	    for i, v in pairs({ 
-	    	QuestLogQuestTitle,
-	    	QuestLogObjective1,
-	    	QuestLogObjective2,
-	    	QuestLogObjectivesText,
-	    	QuestLogDescriptionTitle,
-	    	QuestLogQuestDescription,
-	    }) do
-	    	v:SetVertexColor(219/255, 222/255, 231/255)
-	    end
-	  end
-  end
-end)
---]]
---[[
--- QuestFrame
-local f = CreateFrame("Frame")
-f:RegisterEvent("PLAYER_ENTERING_WORLD")
-f:SetScript("OnEvent", function(self)
-	if GetWoWVersion <= 30600 and GetWoWVersion >= 12000 then
-		if (AbyssUIAddonSettings.ExtraFunctionDisableQuestFrame ~= true) then
-	    self:UnregisterAllEvents()
-	    local ChildRegions = { 
-	    	QuestFrame:GetRegions(), 
-	    	QuestLogDetailFrame:GetRegions(),
-	  		QuestFrameProgressPanel:GetRegions(),
-	  		QuestFrameRewardPanel:GetRegions()
-	  	}
-	    local ScrollRegions = { 
-	    	QuestDetailScrollFrame:GetRegions(),
-	     	QuestDetailScrollChildFrame:GetRegions(), 
-	    	QuestLogDetailScrollFrame:GetRegions(), 
-	     	QuestLogDetailScrollChildFrame:GetRegions(), 
-	     	QuestRewardScrollFrame:GetRegions(), 
-	     	QuestRewardScrollChildFrame:GetRegions(), 
-	   		QuestInfoRewardsFrame:GetRegions(),
-	   		QuestProgressTitleText,
-	   		QuestProgressText,
-	   		QuestInfoRewardText,
-	    }
-	    local fs = {}
-	    for k, v in pairs(ChildRegions) do
-	    	AbyssUI_ColorizationFrameFunction(v)
-	    end
-	    for k, v in pairs(ScrollRegions) do
-	    	v:SetVertexColor(219/255, 222/255, 231/255)
-	    end
-  	end
-  end
-end)
---]]
---[[
--- GossipFrameGreetingPanel
-local f = CreateFrame("Frame")
-f:RegisterEvent("PLAYER_ENTERING_WORLD")
-f:SetScript("OnEvent", function(self)
-	if GetWoWVersion <= 30600 then
-    self:UnregisterAllEvents()
-    local ChildRegions = { GossipFrameGreetingPanel:GetRegions() }
-    local ScrollRegions = { 
-    	GossipGreetingScrollFrame:GetRegions(), 
-     	GossipGreetingScrollChildFrame:GetRegions(),  }
-    local fs = {}
-    for k, v in pairs(ChildRegions) do
-    	AbyssUI_ColorizationFrameFunction(v)
-    end
-    for k, v in pairs(ScrollRegions) do
-    	v:SetVertexColor(219/255, 222/255, 231/255)
-    end
-  end
-end)
---]]
 -- BankFrame
 local f = CreateFrame("Frame")
 f:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -4627,41 +4555,6 @@ ClassicFrames:SetScript("OnEvent", function(self, event, addon)
                     AbyssUI_ColorizationFrameFunction(v)
                 end
             end
-            --[[
-            -- ProfessionsFrame
-            for i, v in pairs({ 
-                ProfessionsFrame.NineSlice.TopEdge,
-                ProfessionsFrame.NineSlice.RightEdge,
-                ProfessionsFrame.NineSlice.BottomEdge,
-                ProfessionsFrame.NineSlice.LeftEdge,
-                ProfessionsFrame.NineSlice.TopRightCorner,
-                ProfessionsFrame.NineSlice.TopLeftCorner,
-                ProfessionsFrame.NineSlice.BottomLeftCorner,
-                ProfessionsFrame.NineSlice.BottomRightCorner,
-                ProfessionsFrame.CraftingPage.RankBar.Border,
-                ProfessionsFrame.CraftingPage.SchematicForm.OutputIcon.IconBorder,
-                DropDownList1MenuBackdrop.NineSlice.TopEdge,
-                DropDownList1MenuBackdrop.NineSlice.RightEdge,
-                DropDownList1MenuBackdrop.NineSlice.BottomEdge,
-                DropDownList1MenuBackdrop.NineSlice.LeftEdge,
-                DropDownList1MenuBackdrop.NineSlice.TopRightCorner,
-                DropDownList1MenuBackdrop.NineSlice.TopLeftCorner,
-                DropDownList1MenuBackdrop.NineSlice.BottomLeftCorner,
-                DropDownList1MenuBackdrop.NineSlice.BottomRightCorner,
-                DropDownList2MenuBackdrop.NineSlice.TopEdge,
-                DropDownList2MenuBackdrop.NineSlice.RightEdge,
-                DropDownList2MenuBackdrop.NineSlice.BottomEdge,
-                DropDownList2MenuBackdrop.NineSlice.LeftEdge,
-                DropDownList2MenuBackdrop.NineSlice.TopRightCorner,
-                DropDownList2MenuBackdrop.NineSlice.TopLeftCorner,
-                DropDownList2MenuBackdrop.NineSlice.BottomLeftCorner,
-            DropDownList2MenuBackdrop.NineSlice.BottomRightCorner,
-             }) do
-                if AbyssUIAddonSettings ~= nil then
-                    AbyssUI_ColorizationFrameFunction(v)
-                end
-            end
-            --]]
             -- Bags
             for i, v in pairs({ 
                 ContainerFrame1.NineSlice,
@@ -4757,6 +4650,32 @@ f:SetScript("OnEvent", function(self, event, name)
       if AbyssUIAddonSettings ~= nil then
         AbyssUI_ColorizationFrameFunction(v)
       end
+    end
+  end
+end)
+-- CharacterMainHandSlot
+local f = CreateFrame("Frame")
+f:RegisterEvent("PLAYER_ENTERING_WORLD")
+f:SetScript("OnEvent", function(self)
+	if GetWoWVersion >= 100000 then
+    self:UnregisterAllEvents()
+    local ChildRegions = { CharacterMainHandSlot:GetRegions() }
+    local fs = {}
+    for k, v in pairs(ChildRegions) do
+    	AbyssUI_ColorizationFrameFunction(v)
+    end
+  end
+end)
+-- CharacterSecondaryHandSlot
+local f = CreateFrame("Frame")
+f:RegisterEvent("PLAYER_ENTERING_WORLD")
+f:SetScript("OnEvent", function(self)
+	if GetWoWVersion >= 100000 then
+    self:UnregisterAllEvents()
+    local ChildRegions = { CharacterSecondaryHandSlot:GetRegions() }
+    local fs = {}
+    for k, v in pairs(ChildRegions) do
+    	AbyssUI_ColorizationFrameFunction(v)
     end
   end
 end)
