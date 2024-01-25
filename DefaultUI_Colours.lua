@@ -90,14 +90,25 @@ end
 -- Global Color Function
 function AbyssUI_ShowColorPicker()
 	if ColorPickerFrame:IsShown() then return end
-	ColorPickerFrame.previousValues = COLOR_MY_UI[character].Color
-	ColorPickerFrame.cancelFunc = ColorPicker_Cancelled
-	ColorPickerFrame.opacityFunc = ColorPicker_Changed
-	ColorPickerFrame.func = ColorPicker_Changed
-	ColorPickerFrame:SetColorRGB(COLOR_MY_UI[character].Color.r, COLOR_MY_UI[character].Color.g, COLOR_MY_UI[character].Color.b)
-	ColorPickerFrame:ClearAllPoints()
-	ColorPickerFrame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", GetCursorPosition())
-	ColorPickerFrame:Show()
+	if GetWoWVersion >= 100000 then
+		ColorPickerFrame.previousValues = COLOR_MY_UI[character].Color
+		ColorPickerFrame.cancelFunc = ColorPicker_Cancelled
+		ColorPickerFrame.opacityFunc = ColorPicker_Changed
+		ColorPickerFrame.func = ColorPicker_Changed
+		ColorPickerFrame.swatchFunc = ColorPicker_Changed
+		ColorPickerFrame:ClearAllPoints()
+		ColorPickerFrame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", GetCursorPosition())
+		ShowUIPanel(ColorPickerFrame)
+	else
+		ColorPickerFrame.previousValues = COLOR_MY_UI[character].Color
+		ColorPickerFrame.cancelFunc = ColorPicker_Cancelled
+		ColorPickerFrame.opacityFunc = ColorPicker_Changed
+		ColorPickerFrame.func = ColorPicker_Changed
+		ColorPickerFrame:SetColorRGB( COLOR_MY_UI[character].Color.r, COLOR_MY_UI[character].Color.g, COLOR_MY_UI[character].Color.b )
+		ColorPickerFrame:ClearAllPoints()
+		ColorPickerFrame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", GetCursorPosition())
+		ColorPickerFrame:Show()
+	end
 end
 -- AbyssUI_ReloadFrame
 local AbyssUI_ReloadFrame = CreateFrame("Frame", "AbyssUI_ReloadFrame", UIParent)
