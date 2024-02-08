@@ -90,25 +90,14 @@ end
 -- Global Color Function
 function AbyssUI_ShowColorPicker()
 	if ColorPickerFrame:IsShown() then return end
-	if GetWoWVersion >= 100000 then
-		ColorPickerFrame.previousValues = COLOR_MY_UI[character].Color
-		ColorPickerFrame.cancelFunc = ColorPicker_Cancelled
-		ColorPickerFrame.opacityFunc = ColorPicker_Changed
-		ColorPickerFrame.func = ColorPicker_Changed
-		ColorPickerFrame.swatchFunc = ColorPicker_Changed
-		ColorPickerFrame:ClearAllPoints()
-		ColorPickerFrame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", GetCursorPosition())
-		ShowUIPanel(ColorPickerFrame)
-	else
-		ColorPickerFrame.previousValues = COLOR_MY_UI[character].Color
-		ColorPickerFrame.cancelFunc = ColorPicker_Cancelled
-		ColorPickerFrame.opacityFunc = ColorPicker_Changed
-		ColorPickerFrame.func = ColorPicker_Changed
-		ColorPickerFrame:SetColorRGB( COLOR_MY_UI[character].Color.r, COLOR_MY_UI[character].Color.g, COLOR_MY_UI[character].Color.b )
-		ColorPickerFrame:ClearAllPoints()
-		ColorPickerFrame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", GetCursorPosition())
-		ColorPickerFrame:Show()
-	end
+	ColorPickerFrame.previousValues = COLOR_MY_UI[character].Color
+	ColorPickerFrame.cancelFunc = ColorPicker_Cancelled
+	ColorPickerFrame.opacityFunc = ColorPicker_Changed
+	ColorPickerFrame.func = ColorPicker_Changed
+	ColorPickerFrame.swatchFunc = ColorPicker_Changed
+	ColorPickerFrame:ClearAllPoints()
+	ColorPickerFrame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", GetCursorPosition())
+	ShowUIPanel(ColorPickerFrame)
 end
 -- AbyssUI_ReloadFrame
 local AbyssUI_ReloadFrame = CreateFrame("Frame", "AbyssUI_ReloadFrame", UIParent)
@@ -3333,6 +3322,22 @@ ClassicFrames:SetScript("OnEvent", function(self, event, addon)
 					end
 				end
 			end
+			-- SettingsPanel
+      for i, v in pairs({ 
+          SettingsPanel.NineSlice.RightEdge,
+          SettingsPanel.NineSlice.LeftEdge,
+          SettingsPanel.NineSlice.TopEdge,
+          SettingsPanel.NineSlice.BottomEdge,
+          SettingsPanel.NineSlice.PortraitFrame,
+          SettingsPanel.NineSlice.TopRightCorner,
+          SettingsPanel.NineSlice.TopLeftCorner,
+          SettingsPanel.NineSlice.BottomLeftCorner,
+          SettingsPanel.NineSlice.BottomRightCorner,
+       }) do
+          if AbyssUIAddonSettings ~= nil then
+            AbyssUI_ColorizationFrameFunction(v)
+          end
+      end
 			-- HelpFrame
 			for i, v in pairs({ 
 				HelpFrameTopBorder,
