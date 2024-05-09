@@ -1,4 +1,4 @@
-## Interface: 11502
+## Interface: 40400
 ## Title: DefaultUI_|cffc4121aCo|r|cff4231E2lo|r|cff598D14urs|r
 ## Version: 10.2.7.1_Classic_Dragonflight
 ## Author: Yugen
