@@ -1,6 +1,6 @@
 ## Interface: 30403
 ## Title: DefaultUI_|cffc4121aCo|r|cff4231E2lo|r|cff598D14urs|r
-## Version: 10.2.7.1_Classic_Dragonflight
+## Version: 11.0.2.1_Classic_TWW
 ## Author: Yugen
 ## Notes-deDE: Minimalistische Benutzeroberfläche für World of Warcraft
 ## Notes-enGB: Minimalist UI for World of Warcraft

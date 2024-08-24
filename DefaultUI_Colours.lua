@@ -329,7 +329,13 @@ local function InitSettings()
   -- Set the name for the Category for the Options Panel1
   DefaultUI_Colours_Config.panel.name = "DefaultUI_Colours"
   -- Add the panel to the Interface Options
-  InterfaceOptions_AddCategory(DefaultUI_Colours_Config.panel, addonName)
+  -- Add the panel to the Interface Options
+  if InterfaceOptions_AddCategory then
+    InterfaceOptions_AddCategory(DefaultUI_Colours_Config.panel, addonName)
+  else
+    local category = Settings.RegisterCanvasLayoutCategory(DefaultUI_Colours_Config.panel, DefaultUI_Colours_Config.panel.name)
+    Settings.RegisterAddOnCategory(category)
+  end
 end
 --
 local BasicFrames = CreateFrame("Frame")
@@ -582,17 +588,7 @@ NewFrames:SetScript("OnEvent", function(self, event, addon)
 				TokenFramePopup.Border.TopRightCorner,
 				TokenFramePopup.Border.TopLeftCorner,
 				TokenFramePopup.Border.BottomLeftCorner,
-				TokenFramePopup.Border.BottomRightCorner,
-				ReputationDetailFrame.Border.TopEdge,
-				ReputationDetailFrame.Border.RightEdge,
-				ReputationDetailFrame.Border.BottomEdge,
-				ReputationDetailFrame.Border.LeftEdge,
-				ReputationDetailFrame.Border.TopRightCorner,
-				ReputationDetailFrame.Border.TopLeftCorner,
-				ReputationDetailFrame.Border.BottomLeftCorner,
-				ReputationDetailFrame.Border.BottomRightCorner,
-				ReputationDetailCorner,
-			ReputationDetailDivider, }) do
+				TokenFramePopup.Border.BottomRightCorner, }) do
 				if AbyssUIAddonSettings ~= nil then
 					AbyssUI_ColorizationFrameFunction(v)
 					for i, v in pairs({
@@ -609,6 +605,7 @@ NewFrames:SetScript("OnEvent", function(self, event, addon)
 					return nil
 				end
 			end
+			--[[
 			-- SpellBook
 			for i, v in pairs({ 
 				SpellBookFrame.NineSlice.TopEdge,
@@ -645,6 +642,7 @@ NewFrames:SetScript("OnEvent", function(self, event, addon)
 					return nil
 				end
 			end
+			--]]
 			-- PvE/Pvp
 			for i, v in pairs({ 
 				PVEFrame.NineSlice.TopEdge,
@@ -1965,22 +1963,6 @@ NewFrames:SetScript("OnEvent", function(self, event, addon)
 				WardrobeOutfitEditFrame.Border.TopLeftCorner,
 				WardrobeOutfitEditFrame.Border.BottomLeftCorner,
 			WardrobeOutfitEditFrame.Border.BottomRightCorner, }) do
-				if AbyssUIAddonSettings ~= nil then
-					AbyssUI_ColorizationFrameFunction(v)
-				else
-					return nil
-				end
-			end
-			-- WardrobeOutfitFrame
-			for i, v in pairs({
-				WardrobeOutfitFrame.Border.TopEdge,
-				WardrobeOutfitFrame.Border.RightEdge,
-				WardrobeOutfitFrame.Border.BottomEdge,
-				WardrobeOutfitFrame.Border.LeftEdge,
-				WardrobeOutfitFrame.Border.TopRightCorner,
-				WardrobeOutfitFrame.Border.TopLeftCorner,
-				WardrobeOutfitFrame.Border.BottomLeftCorner,
-			WardrobeOutfitFrame.Border.BottomRightCorner, }) do
 				if AbyssUIAddonSettings ~= nil then
 					AbyssUI_ColorizationFrameFunction(v)
 				else
@@ -4114,7 +4096,7 @@ f:SetScript("OnEvent", function(self)
   end
 end)
 -- WorldMapFrame.BorderFrame
-local leatrix = IsAddOnLoaded("Leatrix_Maps")
+local leatrix = C_AddOns.IsAddOnLoaded("Leatrix_Maps")
 local f = CreateFrame("Frame")
 f:RegisterEvent("PLAYER_ENTERING_WORLD")
 f:SetScript("OnEvent", function(self)
@@ -4246,7 +4228,7 @@ local f = CreateFrame("Frame")
 f:RegisterEvent("PLAYER_ENTERING_WORLD")
 f:SetScript("OnEvent", function(self, event, name)
 	if GetWoWVersion <= 50600 then
-		loaded = IsAddOnLoaded("Blizzard_TimeManager")
+		loaded = C_AddOns.IsAddOnLoaded("Blizzard_TimeManager")
 		if not loaded then
 			LoadAddOn('Blizzard_TimeManager')
 		end
@@ -4697,6 +4679,21 @@ ClassicFrames:SetScript("OnEvent", function(self, event, addon)
                     AbyssUI_ColorizationFrameFunction(v)
                 end
             end
+            -- CommunitiesFrame
+            for i, v in pairs({ 
+                  CommunitiesFrame.NineSlice.RightEdge,
+                  CommunitiesFrame.NineSlice.LeftEdge,
+                  CommunitiesFrame.NineSlice.TopEdge,
+                  CommunitiesFrame.NineSlice.BottomEdge,
+                  CommunitiesFrame.NineSlice.PortraitFrame,
+                  CommunitiesFrame.NineSlice.TopRightCorner,
+                  CommunitiesFrame.NineSlice.TopLeftCorner,
+                  CommunitiesFrame.NineSlice.BottomLeftCorner,
+                  CommunitiesFrame.NineSlice.BottomRightCorner, }) do
+                if AbyssUIAddonSettings ~= nil then
+                    AbyssUI_ColorizationFrameFunction(v)
+                end
+            end
             -- StatusTrackingBarManager
             for i, v in pairs({ 
                 StatusTrackingBarManager.BottomBarFrameTexture,
@@ -4728,6 +4725,50 @@ f:SetScript("OnEvent", function(self, event, name)
       ClassTalentFrame.NineSlice.TopLeftCorner,
       ClassTalentFrame.NineSlice.BottomLeftCorner,
       ClassTalentFrame.NineSlice.BottomRightCorner,
+     }) do
+      if AbyssUIAddonSettings ~= nil then
+        AbyssUI_ColorizationFrameFunction(v)
+      end
+    end
+  end
+end)
+-- PlayerSpellsFrame
+local f = CreateFrame("Frame")
+f:RegisterEvent("ADDON_LOADED")
+f:SetScript("OnEvent", function(self, event, name)
+  if name == "Blizzard_PlayerSpells" and GetWoWVersion >= 90500 then
+    for i, v in pairs({ 
+				PlayerSpellsFrame.NineSlice.TopEdge,
+				PlayerSpellsFrame.NineSlice.RightEdge,
+				PlayerSpellsFrame.NineSlice.LeftEdge,
+				PlayerSpellsFrame.NineSlice.TopEdge,
+				PlayerSpellsFrame.NineSlice.BottomEdge,
+				PlayerSpellsFrame.NineSlice.PortraitFrame,
+				PlayerSpellsFrame.NineSlice.TopRightCorner,
+				PlayerSpellsFrame.NineSlice.TopLeftCorner,
+				PlayerSpellsFrame.NineSlice.BottomLeftCorner,
+				PlayerSpellsFrame.NineSlice.BottomRightCorner,
+     }) do
+      if AbyssUIAddonSettings ~= nil then
+        AbyssUI_ColorizationFrameFunction(v)
+      end
+    end
+  end
+end)
+-- ProfessionsBookFrame
+local f = CreateFrame("Frame")
+f:RegisterEvent("ADDON_LOADED")
+f:SetScript("OnEvent", function(self, event, name)
+  if name == "Blizzard_ProfessionsBook" and GetWoWVersion >= 90500 then
+    for i, v in pairs({ 
+        ProfessionsBookFrame.NineSlice.TopEdge,
+        ProfessionsBookFrame.NineSlice.RightEdge,
+        ProfessionsBookFrame.NineSlice.BottomEdge,
+        ProfessionsBookFrame.NineSlice.LeftEdge,
+        ProfessionsBookFrame.NineSlice.TopRightCorner,
+        ProfessionsBookFrame.NineSlice.TopLeftCorner,
+        ProfessionsBookFrame.NineSlice.BottomLeftCorner,
+        ProfessionsBookFrame.NineSlice.BottomRightCorner,
      }) do
       if AbyssUIAddonSettings ~= nil then
         AbyssUI_ColorizationFrameFunction(v)
